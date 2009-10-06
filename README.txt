@@ -1,0 +1,1 @@
+Add jrdf-0.5.5.5.jar to your java class path
