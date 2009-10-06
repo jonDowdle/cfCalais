@@ -24,16 +24,36 @@
 </cfif>
 
 <cffunction name="test" >
-	<cfargument name="xmlin">
-	<cfset var strct = {}>
-	
-	<cfset resources = xmlSearch(variables.semanticContent, '//rdf:Description/c:subject/@rdf:resource')>
-	<cfloop array="#resources#" index="i">
-		<cfset strct['#i.XmlValue#'] = xmlSearch(variables.semanticContent, '//rdf:Description/c:subject[@rdf:resource="#i.XmlValue#"]/..')>
+	<cfset var typeStrct = {}>
+	<cfset var entStruct = {} />
+	<cfloop collection="#variables.semanticContent#" item="key">
+		<cfset tuple = variables.semanticContent[key]>
+		<cfif structKeyExists(tuple, '_type')>
+			<cfoutput>#tuple._type# : #arrayLen(tuple.instances)#</cfoutput>
+			
+			<cfif !structKeyExists(typeStrct, tuple._type)>
+				<cfset typeStrct[tuple._type] = {}>
+			</cfif>
+			<!---
+			TODO: Fix
+			Overwrites existing structs
+			--->
+			<cfif structKeyExists(tuple, 'name')> 
+				<cfset entStruct = { name = tuple.name, instances = tuple.instances} />
+				<cfset structAppend( typeStrct[tuple._type], entStruct ) />
+				<cfdump var="#typeStrct#">  
+			</cfif>
+			<br />
+		<cfelse>
+			<!---
+			When _type isn't defined there seems to be a _typeGroup defined. 
+			The exception to this is the document information, in which the key is 'doc' 
+			 --->
+			<cfdump var="#tuple#">
+		</cfif>
 	</cfloop>
-	
-	<cfdump var="#semanticContent#">
-	<cfdump var="#strct#">
+
+	<cfdump var="#variables.semanticContent#">
 </cffunction>
 
 <cffunction name="extractEntities" hint='I return a struct that enables easy extraction of entities. This only works with XML as of now.'>

@@ -55,7 +55,7 @@
 	<c:processingDirectives 
 		c:contentType="text/raw" 
 		c:enableMetadataType="GenericRelations,SocialTags" 
-		c:outputFormat="XML/RDF"
+		c:outputFormat="Application/JSON"
 		<!--- 
 		"XML/RDF", "Text/Simple" or "Text/Microformats" or "Application/JSON"
 		--->
