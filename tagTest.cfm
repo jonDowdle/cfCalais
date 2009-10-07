@@ -1,24 +1,57 @@
-<cf_calais name="warsaw" license='#url.license#'>
-WARSAW, Poland — Poles and Czechs voiced deep concern Friday at President Barack Obama's decision to scrap a Bush-era missile defense shield planned for their countries.
-"Betrayal! The U.S. sold us to Russia and stabbed us in the back," the Polish tabloid Fakt declared on its front page.
-Polish President Lech Kaczynski said he was concerned that Obama's new strategy leaves Poland in a dangerous "gray zone" between Western Europe and the old Soviet sphere.
-Recent events have rattled nerves throughout central and eastern Europe, a region controlled by Moscow during the Cold War, including the war last summer between Russia and Georgia and ongoing efforts by Russia to regain influence in Ukraine. A Russian cutoff of gas to Ukraine last winter left many Europeans without heat.
-"Russia is testing us. It is testing how much we are afraid of it. It's pity that we won't be able to complete the test," said former Czech President Vaclav Havel.
-The Bush administration's missile defense plan would have been "a major step in preventing various disturbing trends in our region of the world," Kaczynski said in a guest editorial in Fakt that also was carried on his presidential Web site.
-Neighboring Lithuania, a small Baltic nation that broke away from the Soviet Union in 1991 and is now a NATO member, also expressed regret over Obama's decision.
-Defense Minister Rasa Jukneviciene said that the shield would have increased security for Lithuania and she hoped missile defense would not be excluded from future talks on NATO security.
-U.S. Defense Secretary Robert Gates said he still sees a chance for Poles and Czechs to participate in the redesigned missile defense system. But that did not appear to calm nerves in Warsaw or Prague.
-Kaczynski expressed hopes that the U.S. will now offer Poland other forms of "strategic partnership."
-Later Friday, U.S. ambassador Victor Ashe stressed that "the United States counts Poland among its closest allies and friends."
-"Consultations on the way forward for missile defense will continue between our two governments," Ashe said in a statement. "The role Poland would play in the new, phased, adapted approach is as crucial now as in the past."
-In Prague, Czech Foreign Minister Jan Kohout said he made two concrete proposals to U.S. officials on Thursday in hopes of keeping the U.S.-Czech alliance strong: for the U.S. to establish a branch of West Point for NATO members in Central Europe and to "send a Czech scientist on the U.S. space shuttle to the international space station."
-An editorial in Hospodarske Novine, a respected pro-business Czech newspaper, said: "an ally we rely on has betrayed us, and exchanged us for its own, better relations with Russia, of which we are rightly afraid."
-The move has raised fears in the two nations they are being marginalized by Washington even as a resurgent Russia leaves them longing for added American protection.
-The Bush administration always said that the planned system — with a radar near Prague and interceptors in northern Poland — was meant as defense against Iran. But Poles and Czechs saw it as protection against Russia, and Moscow too considered a military installation in its backyard to be a threat.
-"No Radar. Russia won," the largest Czech daily, Mlada Fronta Dnes, declared in a front-page headline.
-Obama said the old plan was scrapped in part because the U.S. has concluded that Iran is less focused on developing the kind of long-range missiles for which the system was originally developed, making the building of an expensive new shield unnecessary.
-The replacement system is to link smaller radar systems with a network of sensors and missiles that could be deployed at sea or on land. Some of the weaponry and sensors are ready now, and the rest would be developed over the next 10 years.
-The Pentagon contemplates a system of perhaps 40 missiles by 2015, at two or three sites across Europe.
+<cf_calais name="kindle" license='#url.license#'>
+Amazon's Kindle e-book reader is going on sale in more than 100 countries around the world, including the UK.
+
+The reader has been confined to the US since its launch in November 2007; Amazon expects to have sold a million of the devices by the end of the year.
+
+The global version will run on the 3G network, although Amazon has not specified the networks that will provide connectivity for the devices.
+
+The Kindle store will offer over 200,000 English-language titles.
+
+Hundreds of publishers are signed up including Penguin, Faber and Faber, and HarperCollins.
+
+It will also carry more than 85 US and international newspapers and magazines.
+
+"We have millions of customers in countries all over the world who read English-language books. Kindle enables these customers to think of a book and download it in less than 60 seconds," said Amazon founder Jeff Bezos.
+
+Penguin chief executive John Makinson hopes it will kickstart digital book sales in Europe.
+
+"The publishing industry is experiencing explosive growth in digital book sales in the US," he said.
+
+	
+KINDLE IN EUROPE
+Amazon Kindle
+0.36 inches thick with 6in e-ink display
+2GB of internal memory
+QWERTY keyboard to add notes to text
+Battery life "weeks on a single charge"
+USB synching for people out of coverage area
+
+The look and feel of the device will be the same as the US version with the exception of network access.
+
+Following difficulties making the Kindle's Whispernet wireless download system work in the Europe, Amazon has decided to make downloads available via the 3G network.
+
+This means that people wishing to download a book outside of a 3G coverage area will have to transfer content over USB.
+
+In May of this year, Amazon unveiled a new version of its e-reader aimed at reading magazines, newspapers and documents. The Kindle DX is currently available only in the US.
+
+The European version of the Kindle will begin shipping on October 19 with a $279 (£175) price tag. 
 </cf_calais>
 
-<cfdump var="#warsaw#">
+<ul>
+<cfloop collection="#kindle#" item="key">
+	<li><cfoutput>#key# : #StructKeyList(kindle[key])#</cfoutput></li>
+</cfloop>
+</ul>
+<hr />
+
+<cffeed action="read" query="tweetStream" source="http://twitter.com/statuses/user_timeline/1523901.rss"  />
+<cfloop query="tweetStream" endrow="5">
+	<cf_calais name="tweet" license='#url.license#'>
+	<cfoutput>#content#</cfoutput>
+	</cf_calais>
+	<ul>
+	<cfloop collection="#tweet#" item="key">
+		<li><cfoutput>#key# : #StructKeyList(tweet[key])#</cfoutput></li>
+	</cfloop>
+	</ul>
+</cfloop>
