@@ -1,3 +1,11 @@
+<cfparam name="url.license" default="">
+<cfif len(url.license) eq 0>
+	<h1>Oops!</h1>
+	<p>Looks like you forgot to put a license in the url</p>
+	<p>If you don't have one, signup at <a href="http://www.opencalais.com">http://www.opencalais.com</a></p>
+	<cfabort>
+</cfif>
+
 <cf_calais name="kindle" license='#url.license#'>
 Amazon's Kindle e-book reader is going on sale in more than 100 countries around the world, including the UK.
 
