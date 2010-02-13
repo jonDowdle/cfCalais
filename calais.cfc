@@ -1,12 +1,20 @@
 <cfcomponent output="false">
 <cffunction name="init">
+	<cfargument name="license" required="true">
+	<cfargument name="directives" type="struct" 
+				hint="Structure of params to pass to webservice see getCalaisParams()">
+	
 	<cfscript>
-	if(arguments.license eq ''){ /* Extract this logic out to function */
-		throw("Big Error");
+	var local = {};
+	local.directives = {};
+	/*
+	if(structKeyExists(arguments, directives)){
+		local.directives = arguments.directives;
 	}
+	*/
 	variables.liscenseKey = arguments.license;
 	variables.content = "";
-	variables.myParams = getParams();
+	variables.myParams = getCalaisParams( argumentCollection = arguments.directives );
 	variables.semanticContent = '';
 	
 	variables.enlightenWS = createObject('webservice', 'http://api.opencalais.com/enlighten/?wsdl');
@@ -14,7 +22,7 @@
 	</cfscript>
 </cffunction>
 	
-<cffunction name="parseContent">
+<cffunction name="parseContent" output="false">
 	<cfscript>
 	var wsReturnVal = '';
 
@@ -53,7 +61,7 @@
 	<cfreturn extractJSONEntities(arguments.content) />
 </cffunction>
 
-<cffunction name="extractJSONEntities" output="true">
+<cffunction name="extractJSONEntities" output="false">
 	<cfargument name="content">
 	<cfset var typeStrct = {}>
 	<cfset var entStruct = {} >
@@ -99,31 +107,40 @@
 	<cfreturn removeEmptyKeys(typeStrct) />
 </cffunction>
 
-<cffunction name="getParams">
-<cfset var params = "" />
-<cfxml variable="params">
-<c:params xmlns:c="http://s.opencalais.com/1/pred/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-	<c:processingDirectives 
-		c:contentType="text/raw" 
-		c:enableMetadataType="GenericRelations,SocialTags" 
-		c:outputFormat="Application/JSON"
-		<!--- 
-		"XML/RDF", "Text/Simple" or "Text/Microformats" or "Application/JSON"
-		--->
-		c:docRDFaccesible="true" >
-	</c:processingDirectives>
-	
-	<c:userDirectives 
-		c:allowDistribution="true" 
-		c:allowSearch="true" 
-		c:externalID="17cabs901" 
-		c:submitter="local.jDowdle.com">
-	</c:userDirectives>
-	
-	<c:externalMetadata></c:externalMetadata>
-</c:params>
-</cfxml>
-<cfreturn params>
+<cffunction name="getCalaisParams" output="false" returntype="xml"
+			hint="I return an xml variabe that defines the input/output from OpenCalais">
+	<cfargument name="contentType" default="text/raw" 
+				hint='MIME type of content. Possible types are "TEXT/XML" "TEXT/HTML" "TEXT/HTMLRAW" "TEXT/RAW"'/>
+	<cfargument name="enableMetadataType" default="" hint="Possible types: GenericRelations, SocialTags (can be combined in a comma separated list)"/>
+	<cfargument name="outputFormat" default="Application/JSON" 
+				hint='MIME type for web service to return. Possible types are "XML/RDF", "Text/Simple" or "Text/Microformats" or "Application/JSON"'>
+	<cfargument name="docRDFaccesible" default="true" />
+	<cfargument name="allowDistribution" default="true" />
+	<cfargument name="allowSearch" default="true" />
+	<cfargument name="externalID" default="" />
+	<cfargument name="submitter" default="" />
+		
+	<cfset var params = "" />
+	<cfxml variable="params">
+	<c:params xmlns:c="http://s.opencalais.com/1/pred/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+		<c:processingDirectives 
+			c:contentType="<cfoutput>#arguments.contentType#</cfoutput>" 
+			c:enableMetadataType="<cfoutput>#arguments.enableMetadataType#</cfoutput>" 
+			c:outputFormat="<cfoutput>#arguments.outputFormat#</cfoutput>"
+			c:docRDFaccesible="<cfoutput>#arguments.docRDFaccesible#</cfoutput>">
+		</c:processingDirectives>
+		
+		<c:userDirectives 
+			c:allowDistribution="<cfoutput>#arguments.allowDistribution#</cfoutput>" 
+			c:allowSearch="<cfoutput>#arguments.allowSearch#</cfoutput>" 
+			c:externalID="<cfoutput>#arguments.externalID#</cfoutput>" 
+			c:submitter="<cfoutput>#arguments.submitter#</cfoutput>">
+		</c:userDirectives>
+		
+		<c:externalMetadata></c:externalMetadata>
+	</c:params>
+	</cfxml>
+	<cfreturn params>
 </cffunction>
 
 <cffunction name="removeEmptyKeys" access="private">
