@@ -1,6 +1,4 @@
-#cfCalais
-## A Coldfusion tag to easily utilize OpenCalais ##
-* * *
+#cfCalais - A Coldfusion tag to easily utilize OpenCalais
 ### Introduction to OpenCalais
 If you are unfamiliar with ThompsonReuters OpenCalais&copy; service, here is a 
 short description taken from [http://www.opencalais.com/](http://www.opencalais.com/ "Open Calais Website")
